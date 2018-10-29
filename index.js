@@ -10,28 +10,6 @@ const requestLogstash = requestPromise.defaults({
   json: true,
 });
 
-
-// const miio = require('miio');
-//
-// const main = async () => {
-//
-//     try {
-//
-//         const device = await miio.device({address: '10.0.0.106', token: '307685c1524a96d40cb8c10ebc327928'});
-//         console.log('Connected to', device)
-//         await device.togglePower();
-//         await device.destroy();
-//
-//     } catch (e) {
-//         console.error(e);
-//     }
-//
-//
-// };
-//
-// main();
-
-
 const getSonoffData = async() => {
   try {
     const result = await requestSonoff.get('cm?cmnd=EnergyReset')
