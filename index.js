@@ -29,7 +29,7 @@ const getSonoffData = async() => {
     console.error(error);
   }
 };
-setInterval(getSonoffData, 2000);
+setInterval(getSonoffData, 10000);
 
 
 const main = async () => {
@@ -66,4 +66,4 @@ const main = async () => {
 
 };
 
-setInterval(main, 2000);
+setInterval(main, 10000);
