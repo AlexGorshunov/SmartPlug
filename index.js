@@ -13,13 +13,24 @@ const requestLogstash = requestPromise.defaults({
   json: true,
 });
 
+const trace = (obj) => {
+  console.log(obj);
+  return obj;
+}
+
 const getSonoffData = async() => {
   try {
-    const result = await requestSonoff.get('cm?cmnd=EnergyReset')
+    const result = await requestSonoff.get('cm?cmnd=Status%208')
     await requestLogstash.post('/', {
       body: {
-        '@timestamp': moment().utcOffset('+03:00').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
-        energy: result.EnergyReset,
+        '@timestamp': result.StatusSNS.Time + '+01:00',
+        energy_total: result.StatusSNS.ENERGY.Total,
+        energy_yesterday: result.StatusSNS.ENERGY.Yesterday,
+        energy_today: result.StatusSNS.ENERGY.Today,
+        energy_power: result.StatusSNS.ENERGY.Power,
+        energy_factor: result.StatusSNS.ENERGY.Factor,
+        energy_voltage: result.StatusSNS.ENERGY.Voltage,
+        energy_current: result.StatusSNS.ENERGY.Current,
         device_id: 'sonoff:device1',
         device_type: 'sonoffPow',
         user_id: config.user.id,
